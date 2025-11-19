@@ -37,7 +37,7 @@ def contains_vertex(my_graph, key_u):
         return False
 
 def order(my_graph):
-    return lp.my_graph["vertices"]
+    return my_graph["vertices"]["size"]
 
 def size(my_graph):
     return my_graph["num_edges"]

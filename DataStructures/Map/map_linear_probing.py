@@ -61,7 +61,7 @@ def find_slot(my_map, key, hash_value):
             first_avail = hash_value
             found = True
             ocupied = True
-    hash_value = (hash_value + 1) % my_map["capacity"]
+        hash_value = (hash_value + 1) % my_map["capacity"]
     return ocupied, first_avail
 
 def rehash(my_map):
@@ -100,23 +100,24 @@ def put(my_map,key,value):
 
 def contains(my_map, key):
     hash_index = mp.hash_value(my_map, key)
-    slot = find_slot(my_map, key, hash_index)
-    
-    if slot["key"] is None:
+    ocupied, slot = find_slot(my_map, key, hash_index)
+    entry = my_map["table"]["elements"][slot]
+    if entry["key"] is None:
         return False
-    if slot["key"] == key:
+    if entry["key"] == key:
         return True
     else:
         return False
     
 def get(my_map, key):
     hash_index = mp.hash_value(my_map, key)
-    slot = find_slot(my_map, key, hash_index)
+    ocupied, slot = find_slot(my_map, key, hash_index)
+    entry = my_map["table"]["elements"][slot]
     
-    if slot["key"] is None:
+    if entry["key"] is None:
         return None
-    if slot["key"] == key:
-        return slot["value"]
+    if entry["key"] == key:
+        return entry["value"]
     else:
         return None
 
