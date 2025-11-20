@@ -112,11 +112,11 @@ def contains(my_map, key):
 def get(my_map, key):
     hash_index = mp.hash_value(my_map, key)
     ocupied, slot = find_slot(my_map, key, hash_index)
-    
-    if slot["key"] is None:
+    entry = my_map["table"]["elements"][slot]
+    if entry["key"] is None:
         return None
-    if slot["key"] == key:
-        return slot["value"]
+    if entry["key"] == key:
+        return entry["value"]
     else:
         return None
 
