@@ -12,6 +12,7 @@ def bfs(my_graph, source):
         "edge_from": None,
         "dist_to": 0})
     return bfs_vertex(my_graph, source, visited)
+
 def bfs_vertex(my_graph, source, visited_map):
     cola = q.new_queue()
     q.enqueue(cola, source)

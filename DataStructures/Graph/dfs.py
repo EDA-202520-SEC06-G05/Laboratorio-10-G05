@@ -1,6 +1,7 @@
 from DataStructures.Map import map_linear_probing as lp
 from DataStructures.Graph import digraph as dg
 from DataStructures.List import array_list as al
+from DataStructures.Stack import stack as st
 
 def dfs(my_graph,source):
     visited_map = lp.new_map(lp.size(my_graph["vertices"]),0.5,None)
@@ -36,11 +37,11 @@ def has_path_to(key_v, visited_map):
 
 def path_to(key_v, visited_map):
     if has_path_to(key_v,visited_map):
-        path = al.new_list()
-        al.add_last(path,key_v)
+        path = st.new_stack()
+        st.push(path,key_v)
         while lp.get(visited_map,key_v)["edge_from"] is not None:
             key_u = lp.get(visited_map,key_v)["edge_from"]
-            al.add_first(path,key_u)
+            st.push(path,key_u)
             key_v = key_u
         return path
     else:
