@@ -71,7 +71,7 @@ def vertices(my_graph):
             al.add_last(lista, each["key"])
     return lista
 
-def edges_vertex(my_graph, key_u):
+def edges_vertex(my_graph, key_u):  
     
     if not contains_vertex(my_graph, key_u):
         raise Exception("El vertice u no existe")
@@ -81,8 +81,9 @@ def edges_vertex(my_graph, key_u):
     lista = al.new_list()
     table = adj_map["table"]["elements"]
     for entry in table:
-        if entry["key"] is not None:
-            al.add_last(lista, entry["value"])
+        if entry is not None:
+            if entry["key"] is not None:
+                al.add_last(lista,(key_u,entry["key"],entry["weight"]))  
     return lista
 
 def get_vertex(my_graph, key_u):
@@ -111,7 +112,6 @@ def get_vertex_information(my_graph, key_u):
     else:
         vertex_info = vertex["value"]
         return vertex_info
-        
-        
+
 
 
