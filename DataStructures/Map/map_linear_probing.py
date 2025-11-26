@@ -111,14 +111,52 @@ def contains(my_map, key):
     
 def get(my_map, key):
     hash_index = mp.hash_value(my_map, key)
-    slot = find_slot(my_map, key, hash_index)
-    
-    if slot["key"] is None:
+    ocupied, slot = find_slot(my_map, key, hash_index)
+    entry = my_map["table"]["elements"][slot]
+    if entry["key"] is None:
         return None
-    if slot["key"] == key:
-        return slot["value"]
+    if entry["key"] == key:
+        return entry["value"]
     else:
         return None
 
+def size(my_map):
+    return my_map["size"]
 
+
+def remove(my_map, key):
     
+    hash_index = mp.hash_value(my_map, key)
+    ocupada, slot = find_slot(my_map, key, hash_index)
+    if ocupada:
+        
+        al.get_element(my_map["table"], slot)["key"] = "_EMPTY_"
+        al.get_element(my_map["table"], slot)["value"] = None
+        
+        
+        my_map["size"] -= 1
+        my_map["current_factor"] = my_map["size"] / my_map["capacity"]
+        return True
+    return False
+
+def is_empty(my_map):
+    if my_map["size"] == 0:
+        return True
+    else:
+        return False
+    
+def key_set(my_map):
+    lista = al.new_list()
+    table = my_map["table"]["elements"]
+    for slot in table:
+        if slot["key"] is not None:
+            al.add_last(lista, slot["key"])
+    return lista
+
+def value_set(my_map):
+    lista = al.new_list()
+    table = my_map["table"]["elements"]
+    for slot in table:
+        if slot["key"] is not None:
+            al.add_last(lista, slot["value"])
+    return lista

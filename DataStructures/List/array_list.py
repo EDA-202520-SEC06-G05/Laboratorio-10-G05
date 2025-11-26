@@ -234,3 +234,4 @@ def quick_sort(my_list, sort_crit):
         for e in sorted_right["elements"]:
             add_last(result, e)
         return result
+    
