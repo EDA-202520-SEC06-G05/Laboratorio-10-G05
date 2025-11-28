@@ -33,6 +33,8 @@ from DataStructures.Map import map_linear_probing as m
 from DataStructures.Graph import digraph as G
 from DataStructures.List import array_list as al
 from DataStructures.Graph import dfs as dfs
+from DataStructures.Graph import bfs as bfs
+from DataStructures.Graph import dijkstra as djf
 from DataStructures.Stack import stack as st
 
 
@@ -309,16 +311,31 @@ def get_route_between_stops_dfs(analyzer, stop1, stop2):
     ...
 
 def get_route_between_stops_bfs(analyzer, stop1, stop2):
-    """
-    Obtener la ruta entre dos parada usando bfs
-    """
+    graph = analyzer["connections"]
+    visited_map = bfs.bfs(graph, stop1)
+    if not bfs.has_path_to(stop2, visited_map):
+        return None
+    stack_path = bfs.path_to(stop2, visited_map)
+    route = al.new_list()
+    while not st.is_empty(stack_path):
+        vertex = st.pop(stack_path)
+        al.add_last(route, vertex)
+    return route
     # TODO: Obtener la ruta entre dos parada usando bfs
     ...
 
 def get_shortest_route_between_stops(analyzer, stop1, stop2):
-    """
-    Obtener la ruta mínima entre dos paradas
-    """
+    graph = analyzer["connections"]
+    paths = djf.dijkstra(graph, stop1)
+    analyzer["paths"] = paths
+    if not djf.has_path_to(stop2, paths):
+        return None
+    stack_path = djf.path_to(stop2, paths)
+    route = al.new_list()
+    while not st.is_empty(stack_path):
+        vertex = st.pop(stack_path)
+        al.add_last(route, vertex)
+    return route
     # TODO: Obtener la ruta mínima entre dos paradas
     # Nota: Tenga en cuenta que el debe guardar en la llave
     #       analyzer['paths'] el resultado del algoritmo de Dijkstra
