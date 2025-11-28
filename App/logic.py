@@ -31,6 +31,11 @@
 from DataStructures.List import single_linked_list as lt
 from DataStructures.Map import map_linear_probing as m
 from DataStructures.Graph import digraph as G
+from DataStructures.List import array_list as al
+from DataStructures.Graph import dfs as dfs
+from DataStructures.Stack import stack as st
+
+
 import csv
 import time
 import os
@@ -135,6 +140,7 @@ def total_stops(analyzer):
     """
     Total de paradas de autobus en el grafo
     """
+    return G.order(analyzer["connections"])
     # TODO: Retorne el número de vértices del grafo
 
 
@@ -143,7 +149,7 @@ def total_connections(analyzer):
     Total de enlaces entre las paradas
     """
     # TODO: Retorne el número de arcos del grafo de conexiones
-
+    return G.size(analyzer["connections"])
 
 # Funciones para la medición de tiempos
 
@@ -250,6 +256,34 @@ def get_most_concurrent_stops(analyzer):
     """
     Obtiene las 5 paradas más concurridas
     """
+    graph = analyzer["connections"]
+    vert = G.vertices(graph)
+    n = al.size(vert)
+    
+    degree_list = al.new_list()
+    for i in range(1, n+1):
+        key = al.get_element(vert, i)
+        d = G.degree(graph, key)
+        al.add_last(degree_list, {"key": key, "degree": d})
+        
+    result = al.new_list()
+    limit = 5
+    if al.size(degree_list)<5:
+        limit = al.size(degree_list)
+    for e in range(limit)
+        max_pos = 1
+        max_item = al.get_element(degree_list, 1)
+        size_deg = al.size(degree_list)
+        
+        for j in range(2, size_deg+1):
+            item = al.get_element(degree_list, j)
+            if item["degree"] > max_item["degree"]:
+                max_item = item
+                max_pos = j
+        al.add_last(result, max_item)
+        al.remove_first(degree_list, max_pos)
+        
+    return result
     # TODO: Obtener las 5 paradas más concurridas, es decir, con más arcos salientes
     ...
 
@@ -257,6 +291,20 @@ def get_route_between_stops_dfs(analyzer, stop1, stop2):
     """
     Obtener la ruta entre dos parada usando dfs
     """
+    graph = analyzer["connections"]
+    visited_map = dfs.dfs(graph, stop1)
+    
+    if not dfs.has_path_to(stop2, visited_map):
+        return None
+    
+    stack_path = dfs.path_to(stop1, visited_map)
+    route = al.new_list()
+    
+    while not st.is_empty(stack_path):
+        vertex = st.pop(stack_path)
+        al.add_last(route, vertex)
+    return route
+    
     # TODO: Obtener la ruta entre dos parada usando dfs
     ...
 
