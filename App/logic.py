@@ -22,7 +22,7 @@
  *
  * Dario Correal
  *
- """
+"""
 
 # ___________________________________________________
 #  Importaciones
@@ -31,7 +31,6 @@
 from DataStructures.List import single_linked_list as lt
 from DataStructures.Map import map_linear_probing as m
 from DataStructures.Graph import digraph as G
-
 import csv
 import time
 import os
@@ -67,7 +66,7 @@ def new_analyzer():
    stops: Tabla de hash para guardar la información de las paradas
    connections: Grafo para representar las rutas entre estaciones
    paths: Estructura que almancena los caminos de costo minimo desde un
-           vertice determinado a todos los otros vértices del grafo
+    vertice determinado a todos los otros vértices del grafo
     """
     try:
         analyzer = {
